@@ -13,12 +13,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/hello', 'HelloController@index')->name('hello');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/tasks', 'TasksController@index');
+    Route::get('/task/{id}', 'TaskController@show');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hello', 'App\Http\Controllers\HelloController@index');
 
-Route::get('/tasks', 'App\Http\Controllers\TasksController@index');
+Route::get('/login', function () {
+    return 'Login form';
+})->name('login');
 
-Route::get('/task/{id}', 'App\Http\Controllers\TaskController@show');
+
+Route::post('/login', function (Request $request) {
+    $login = $request->get('login');
+    $password = $request->get('password');
+    /// Isset in database users.
+    if (true) {
+        \Illuminate\Support\Facades\Auth::loginUsingId(1);
+        return redirect(route('hello'));
+    }
+    return redirect()->back();
+})->name('login');
+

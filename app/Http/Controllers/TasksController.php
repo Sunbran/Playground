@@ -6,12 +6,14 @@ use Illuminate\Http\Request;
 
 class TasksController extends Controller
 {
-    public function index () {
+    public function index()
+    {
         $tasks = [
             'Dishes',
             'Homework',
-            'Practice'
+            'Practice',
         ];
+
         return view('tasks', compact('tasks'));
 
     }
