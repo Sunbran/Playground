@@ -13,17 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/hello', 'HelloController@index')->name('hello');
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/tasks', 'TasksController@index');
-    Route::get('/task/{id}', 'TaskController@show');
-});
-
 Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/hello', 'HelloController@index')->name('hello');
+
+Route::get('/login', 'login@show')->name('login.form');
+Route::post('/login/check', 'login@checkPassword')->name('check.password');
+
+/*
+Route::middleware(['auth'])->group(function () {
+    Route::get('/tasks', 'TasksController@index');
+    Route::get('/task/{id}', 'TaskController@show');
+});
 
 Route::get('/login', function () {
     return 'Login form';
@@ -40,4 +43,4 @@ Route::post('/login', function (Request $request) {
     }
     return redirect()->back();
 })->name('login');
-
+*/
