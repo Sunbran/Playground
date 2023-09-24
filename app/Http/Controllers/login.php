@@ -2,21 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+
 class login extends Controller
 {
     public function show()
     {
+        if (Session::has('password') && Session::get('password') === '123') {
+            return view('content');
+        }
+
         return view('login');
     }
 
-    public function checkPassword(Request $request)
+    public function checkPass(Request $request)
     {
-        if ($request->has('password') && $request->get('password') == 1) {
-            Session::put('valid_password', true);
-
-            return 'Password is valid. You can now access protected content.';
+        $password = $request->input('password');
+        $expectedPass = '123';
+        if (Session::has('password') && $password === $expectedPass) {
+            return view('content');
         } else {
-            return redirect()->back()->with('error', 'Invalid password. Please try again.');
+            return view('noaccess');
         }
     }
 }

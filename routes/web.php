@@ -1,5 +1,7 @@
 <?php
 
+use app\Http\Controllers\login;
+use App\Http\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,8 +21,11 @@ Route::get('/', function () {
 
 Route::get('/hello', 'HelloController@index')->name('hello');
 
-Route::get('/login', 'login@show')->name('login.form');
-Route::post('/login/check', 'login@checkPassword')->name('check.password');
+Route::get('/login', 'login@show')->name('login');
+Route::post('/login', 'login@checkPass')->name('check.pass')->middleware(PasswordAuthTask::class);
+Route::get('/noaccess', 'login@checkPass')->name('noaccess')->middleware(PasswordAuthTask::class);
+
+//Route::post('/login/check', 'login@checkPassword')->name('check.password')->middleware('PasswordAuthTask');
 
 /*
 Route::middleware(['auth'])->group(function () {
