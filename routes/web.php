@@ -1,7 +1,6 @@
 <?php
 
-use app\Http\Controllers\login;
-use App\Http\Middleware;
+use App\Http\Middleware\PasswordAuthTask;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,9 +20,12 @@ Route::get('/', function () {
 
 Route::get('/hello', 'HelloController@index')->name('hello');
 
-Route::get('/login', 'login@show')->name('login');
-Route::post('/login', 'login@checkPass')->name('check.pass')->middleware(PasswordAuthTask::class);
-Route::get('/noaccess', 'login@checkPass')->name('noaccess')->middleware(PasswordAuthTask::class);
+Route::middleware([\App\Http\Middleware\OpenContentWhenPasswordCorrect::class])->group(function () {
+    Route::get('/login', 'Login@index')->name('login.index');
+    Route::post('/login', 'Login@login')->name('login.login');
+});
+
+Route::get('/content', 'Content@index')->name('content.index')->middleware(\App\Http\Middleware\OpenLoginWhenPasswordIsNotCorrect::class);
 
 //Route::post('/login/check', 'login@checkPassword')->name('check.password')->middleware('PasswordAuthTask');
 

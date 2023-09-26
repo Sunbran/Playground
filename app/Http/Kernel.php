@@ -39,7 +39,6 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             'myMiddlewareOne',
-            'PasswordAuthTask',
         ],
 
         'api' => [
@@ -67,6 +66,5 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'myMiddlewareOne' => MyMiddlewareOne::class,
-        'PasswordAuthTask' => \App\Http\Middleware\PasswordAuthTask::class,
     ];
 }
