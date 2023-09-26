@@ -27,6 +27,38 @@ Route::middleware([\App\Http\Middleware\OpenContentWhenPasswordCorrect::class])-
 
 Route::get('/content', 'Content@index')->name('content.index')->middleware(\App\Http\Middleware\OpenLoginWhenPasswordIsNotCorrect::class);
 
+Route::get('/news-test-db-add', function () {
+    $id = \Illuminate\Support\Facades\DB::table('news')->insertGetId([
+        'title' => 'News 1',
+        'description' => 'Hi there.',
+    ]);
+    dd($id);
+});
+Route::get('/news-test-db-get', function () {
+    $news = \Illuminate\Support\Facades\DB::table('news')->where('id', 1)->get();
+    dd($news);
+});
+
+//
+Route::get('/news-test-model-add', function () {
+    $model = \App\Models\News::create([
+        'title' => 'News ' . uniqid(),
+        'description' => 'Hi there.',
+    ]);
+    dd($model->id);
+});
+
+Route::get('/news-test-model-get', function () {
+    $news = \App\Models\News::all();
+    dd($news);
+});
+
+
+Route::get('/users-test-factory', function () {
+    $user = \App\Models\User::factory()->create();
+    dd($user);
+});
+
 //Route::post('/login/check', 'login@checkPassword')->name('check.password')->middleware('PasswordAuthTask');
 
 /*
