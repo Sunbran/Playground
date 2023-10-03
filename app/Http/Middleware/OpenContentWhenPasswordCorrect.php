@@ -17,7 +17,7 @@ class OpenContentWhenPasswordCorrect
     public function handle(Request $request, Closure $next)
     {
         $userHasAccessToTheContent = Session::get('userHasAccessToTheContent', false);
-        if ( $userHasAccessToTheContent === true ) {
+        if ($userHasAccessToTheContent === true) {
             return redirect()->route('content.index');
         } else {
             return $next($request);

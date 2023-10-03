@@ -17,7 +17,7 @@ class OpenLoginWhenPasswordIsNotCorrect
     public function handle(Request $request, Closure $next)
     {
         $userHasAccessToTheContent = Session::get('userHasAccessToTheContent', false);
-        if ( $userHasAccessToTheContent === false ) {
+        if ($userHasAccessToTheContent === false) {
             return redirect()->route('login.index');
         } else {
             return $next($request);
