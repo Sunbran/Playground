@@ -19,7 +19,7 @@ class PostController extends Controller
             'author_name' => 'required|string|max:255',
         ]);
 
-        Post::create($validatedData);
+        \App\Models\Post::create($validatedData);
 
         return redirect()->route('posts.create')->with('success', 'Post created successfully!');
     }
