@@ -59,6 +59,9 @@ Route::get('/users-test-factory', function () {
     dd($user);
 });
 
+Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+
 //Route::post('/login/check', 'login@checkPassword')->name('check.password')->middleware('PasswordAuthTask');
 
 /*
