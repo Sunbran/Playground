@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: $DB_DATABASE
+      MYSQL_PASSWORD: $DB_PASSWORD
+      MYSQL_USER: $DB_USERNAME
+    volumes:
+      - ./.docker/mysql/my.cnf:/etc/mysql/my.cnf
+      - dbdata:/var/lib/mysql
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
+      interval: 5s
+      retries: 10
+
+  php:
+    build:
+      context: ./.docker/php
+      args:
+        HOST_UID: $HOST_UID
+    working_dir: /var/www/html
+    restart: unless-stopped
+    extra_hosts:
+      - "$WEB_DOMAIN:host-gateway"
+    environment:
+      COMPOSER_MEMORY_LIMIT: "-1"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    volumes:
+      - ./:/var/www/html
+
+  nginx:
+    build: ./.docker/nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www/html
+      - ./.docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./.docker/nginx/certs:/etc/nginx/certs
+    depends_on:
+      - php
+
+  redis:
+    image: redis:latest
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+
+volumes:
+  dbdata:
+  redisdata:
