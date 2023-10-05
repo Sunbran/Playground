@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
     public function create()
     {
-        return view('create-post-form');
+        return view('posts.form');
+    }
+
+    public function show(Post $post)
+    {
+        dd($post);
     }
 
     public function store(Request $request)
@@ -19,8 +25,8 @@ class PostController extends Controller
             'author_name' => 'required|string|max:255',
         ]);
 
-        \App\Models\Post::create($validatedData);
+        $post = Post::create($validatedData);
 
-        return redirect()->route('posts.create')->with('success', 'Post created successfully!');
+        return redirect()->route('posts.show', $post)->with('success', 'Post created successfully!');
     }
 }

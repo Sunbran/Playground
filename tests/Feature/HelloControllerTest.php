@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 
-class ExampleTest extends TestCase
+class HelloControllerTest extends TestCase
 {
     /**
      * A basic test example.
@@ -13,7 +13,7 @@ class ExampleTest extends TestCase
      */
     public function test_example()
     {
-        $response = $this->get('/');
+        $response = $this->get(route('hello'));
 
         $response->assertStatus(200);
     }

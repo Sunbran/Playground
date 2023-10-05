@@ -60,6 +60,7 @@ Route::get('/users-test-factory', function () {
 });
 
 Route::get('/posts/create', [\App\Http\Controllers\PostController::class, 'create'])->name('posts.create');
+Route::get('/posts/{post}', [\App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
 Route::post('/posts', [\App\Http\Controllers\PostController::class, 'store'])->name('posts.store');
 
 //Route::post('/login/check', 'login@checkPassword')->name('check.password')->middleware('PasswordAuthTask');
