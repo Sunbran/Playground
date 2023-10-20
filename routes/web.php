@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/admin/news', [NewsController::class, 'index'])->name('admin.news.index');
+Route::get('/admin/news/create', [NewsController::class, 'create'])->name('admin.news.create');
+Route::post('/admin/news/', [NewsController::class, 'store'])->name('admin.news.store');
+Route::get('/admin/news/{news}/edit', [NewsController::class, 'edit'])->name('admin.news.edit');
+Route::put('/admin/news/{news}/update', [NewsController::class, 'update'])->name('admin.news.update');
+Route::delete('/admin/news/{news}/delete', [NewsController::class, 'delete'])->name('admin.news.delete');
