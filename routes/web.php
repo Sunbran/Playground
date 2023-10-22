@@ -3,9 +3,6 @@
 use App\Http\Controllers\AdminLogin;
 use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\OpenAdminLoginWhenPasswordIsNotCorrect;
-use App\Http\Middleware\OpenAdminPanelWhenPasswordIsCorrect;
-use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +19,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/admin', [AdminLogin::class, 'login'])->name('admin.login');
+
 Route::middleware(['admin.login'])->group(function () {
-    Route::get('/admin', [AdminLogin::class, 'login'])->name('admin.login');
     Route::post('/admin', [AdminLogin::class, 'loginSubmit'])->name('admin.login.submit');
 });
 

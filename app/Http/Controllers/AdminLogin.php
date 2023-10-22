@@ -15,13 +15,14 @@ class AdminLogin extends Controller
     public function loginSubmit(Request $request)
     {
         $password = $request->input('password');
-        $expectedPass = config('content.password');
-        if (! empty($expectedPass) and $password === $expectedPass) {
+        $expectedPass = config('content.password'); // Assuming you have the password in your configuration
+
+        if (! empty($expectedPass) && $password === $expectedPass) {
             Session::put('userHasAccessToTheContent', true);
 
-            return redirect()->route('admin.login');
-        } else {
             return redirect()->route('admin.news.index');
+        } else {
+            return redirect()->route('admin.login');
         }
     }
 }

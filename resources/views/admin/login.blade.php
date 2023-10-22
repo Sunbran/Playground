@@ -5,7 +5,7 @@
 </head>
 <body>
 
-    <form method="POST" action="{{ route('admin.login') }}">
+    <form method="POST" action="{{ route('admin.login.submit') }}">
         @csrf
         <label for="username">Username:</label>
         <input type="text" name="username" id="username" required>
