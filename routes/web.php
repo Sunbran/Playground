@@ -19,9 +19,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin', [AdminLogin::class, 'login'])->name('admin.login');
-
 Route::middleware(['admin.login'])->group(function () {
+    Route::get('/admin', [AdminLogin::class, 'login'])->name('admin.login');
     Route::post('/admin', [AdminLogin::class, 'loginSubmit'])->name('admin.login.submit');
 });
 

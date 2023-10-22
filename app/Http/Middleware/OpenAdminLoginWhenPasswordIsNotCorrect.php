@@ -16,10 +16,10 @@ class OpenAdminLoginWhenPasswordIsNotCorrect
     public function handle(Request $request, Closure $next)
     {
         $userHasAccessToTheContent = Session::get('userHasAccessToTheContent', false);
-        if ($userHasAccessToTheContent === false) {
-            return redirect()->route('admin.login');
-        } else {
+        if ($userHasAccessToTheContent === true) {
             return $next($request);
+        } else {
+            return redirect()->route('admin.login');
         }
     }
 }
