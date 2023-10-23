@@ -17,9 +17,9 @@ class OpenAdminPanelWhenPasswordIsCorrect
     {
         $userHasAccessToTheContent = Session::get('userHasAccessToTheContent', false);
         if ($userHasAccessToTheContent === true) {
-            return redirect()->route('admin.news.index');
-        } else {
             return $next($request);
+        } else {
+            return redirect()->route('admin.news.index');
         }
     }
 }

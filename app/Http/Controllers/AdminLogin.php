@@ -15,9 +15,10 @@ class AdminLogin extends Controller
     public function loginSubmit(Request $request)
     {
         $password = $request->input('password');
-        $expectedPass = env('PASSWORD');
-
-        if (! empty($expectedPass) && $password === $expectedPass) {
+        $username = $request->input('username');
+        $expectedPass = config('admin.password');
+        $expectedUser = config('admin.username');
+        if ($username === $expectedUser && $password === $expectedPass) {
             Session::put('userHasAccessToTheContent', true);
 
             return redirect()->route('admin.news.index');

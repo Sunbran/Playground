@@ -19,12 +19,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['admin.login'])->group(function () {
+Route::middleware(['OpenAdminLoginWhenPasswordIsNotCorrect', 'OpenAdminPanelWhenPasswordIsCorrect'])->group(function () {
     Route::get('/admin', [AdminLogin::class, 'login'])->name('admin.login');
     Route::post('/admin', [AdminLogin::class, 'loginSubmit'])->name('admin.login.submit');
-});
-
-Route::middleware(['admin.panel'])->group(function () {
     Route::get('/admin/news', [NewsController::class, 'index'])->name('admin.news.index');
     Route::get('/admin/news/create', [NewsController::class, 'create'])->name('admin.news.create');
     Route::post('/admin/news/', [NewsController::class, 'store'])->name('admin.news.store');

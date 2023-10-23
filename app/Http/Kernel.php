@@ -64,7 +64,7 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'admin.login' => \App\Http\Middleware\OpenAdminLoginWhenPasswordIsNotCorrect::class,
-        'admin.panel' => \App\Http\Middleware\OpenAdminPanelWhenPasswordIsCorrect::class,
+        'OpenAdminLoginWhenPasswordIsNotCorrect' => \App\Http\Middleware\OpenAdminLoginWhenPasswordIsNotCorrect::class,
+        'OpenAdminPanelWhenPasswordIsCorrect' => \App\Http\Middleware\OpenAdminPanelWhenPasswordIsCorrect::class,
     ];
 }
