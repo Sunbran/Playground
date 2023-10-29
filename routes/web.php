@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\AdminLogin;
-use App\Http\Controllers\NewsController;
+use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\NewsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,9 +19,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['OpenAdminLoginWhenPasswordIsNotCorrect', 'OpenAdminPanelWhenPasswordIsCorrect'])->group(function () {
-    Route::get('/admin', [AdminLogin::class, 'login'])->name('admin.login');
-    Route::post('/admin', [AdminLogin::class, 'loginSubmit'])->name('admin.login.submit');
+Route::middleware(['OpenAdminLoginWhenPasswordIsNotCorrect'])->group(function () {
+    Route::get('/admin', [LoginController::class, 'login'])->name('admin.login');
+    Route::post('/admin', [LoginController::class, 'loginSubmit'])->name('admin.login.submit');
+});
+
+Route::middleware(['OpenAdminPanelWhenPasswordIsCorrect'])->group(function () {
     Route::get('/admin/news', [NewsController::class, 'index'])->name('admin.news.index');
     Route::get('/admin/news/create', [NewsController::class, 'create'])->name('admin.news.create');
     Route::post('/admin/news/', [NewsController::class, 'store'])->name('admin.news.store');
