@@ -47,7 +47,7 @@ class NewsController extends Controller
         $data = $request->validate(
             [
                 'title' => 'required|string',
-                'category' => 'required|string',
+                'category' => 'nullable|exists:categories,id',
                 'content' => 'required|string',
             ]
         );

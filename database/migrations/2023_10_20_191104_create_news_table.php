@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('category_id');
             $table->string('title');
             $table->string('content');
             $table->unsignedBigInteger('category_id');
