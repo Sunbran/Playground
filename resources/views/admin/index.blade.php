@@ -15,7 +15,7 @@
         @endif
     </div>
     <a href="{{route('admin.news.create')}}">Create News</a>
-    <table border="1">
+    <table class="table table-striped">
       <tr>
         <th>Title</th>
         <th>Category</th>
@@ -35,7 +35,7 @@
             <form method="post" action="{{route('admin.news.delete', ['news' => $newss])}}">
                     @csrf
                     @method('delete')
-                   <input type="submit" value="Delete" />
+                    <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
             </td>
         </tr>

@@ -24,17 +24,31 @@ class NewsController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate(
-            [
-                'title' => 'required|string',
-                'category' => 'required|string',
-                'content' => 'required|string',
-            ]
-        );
+        $data = $request->validate([
+            'title' => 'required|string',
+            'category' => 'required|exists:categories,id',
+            'content' => 'required|string',
+        ]);
 
-        $newArticle = News::create($data);
+        // Find the selected category
+        $category = Category::find($data['category']);
 
-        return redirect(route('admin.news.index'));
+        // Check if the category exists
+        if ($category) {
+            // Create a new News instance
+            $newArticle = new News([
+                'title' => $data['title'],
+                'content' => $data['content'],
+            ]);
+
+            // Associate the news article with the category
+            $category->news()->save($newArticle);
+
+            return redirect(route('admin.news.index'));
+        } else {
+            // Handle the case where the category doesn't exist
+            return redirect(route('admin.news.create'))->with('error', 'Selected category does not exist.');
+        }
     }
 
     public function edit(News $news)
