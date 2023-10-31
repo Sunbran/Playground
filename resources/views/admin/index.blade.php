@@ -26,7 +26,7 @@
       @foreach($news as $newss)
         <tr>
             <td>{{$newss->title}}</td>
-            <td>{{$newss->category}}</td>
+            <td>{{$newss->category->name}}</td>
             <td>{{$newss->content}}</td>
             <td>
                 <a href="{{route('admin.news.edit', ['news' => $newss])}}">Edit</a>

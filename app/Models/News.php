@@ -13,6 +13,10 @@ class News extends Model
     [
         'title',
         'content',
-        'category',
     ];
+
+    public function category()
+    {
+        return $this->hasMany(Category::class, 'category_id');
+    }
 }

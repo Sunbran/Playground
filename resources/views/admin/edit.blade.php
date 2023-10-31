@@ -8,15 +8,15 @@
 <body>
     <h1>Edit a News article</h1>
 
-    <div>
-    @if($errors->any())
-     <ul>
-     @foreach ($errors->all() as $error)
-     <li>{{$error}}</li>
-     @endforeach
-     </ul>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
     @endif
-    </div>
     
     <form method="post" action="{{route('admin.news.update', ['news' => $news])}}">
         @csrf 

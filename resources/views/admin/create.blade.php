@@ -8,15 +8,15 @@
 <body>
     <h1>Create a News article</h1>
 
-    <div>
-    @if($errors->any())
-     <ul>
-     @foreach ($errors->all() as $error)
-     <li>{{$error}}</li>
-     @endforeach
-     </ul>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
     @endif
-    </div>
     
     <form method="post" action="{{route('admin.news.store')}}">
         @csrf 
@@ -25,7 +25,12 @@
         <input type="text" id="title" name="title" placeholder="Title" required><br><br>
 
         <label for="category">Category:</label>
-        <input type="text" id="category" name="category" placeholder="Category" required><br><br>
+        <select id="category" name="category_id" required>
+            <option value="" disabled selected>Select a category</option>
+            @foreach ($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+            @endforeach
+        </select><br><br>
 
         <label for="content">Content:</label>
         <textarea id="content" name="content" rows="6" placeholder="Content" required></textarea><br><br>

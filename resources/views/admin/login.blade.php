@@ -4,13 +4,18 @@
     <title>Password Form</title>
 </head>
 <body>
-
+@extends('admin.layout')
+@section('content')
     <form method="POST" action="{{ route('admin.login.submit') }}">
         @csrf
+        <div class="form-group">
         <label for="username">Username:</label>
-        <input type="text" name="username" id="username" required>
+        <input type="text" class="form-control" name="username" id="username">
+        </div>
+        <div class="form-group">
         <label for="password">Password:</label>
-        <input type="password" name="password" id="password">
+        <input type="password" class="form-control" name="password" id="password">
+        </div>
         
         @if ($errors->any())
         <div class="alert alert-danger">
@@ -22,10 +27,10 @@
         </div>
     @endif
 
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     
    
-    
+    @endsection
 </body>
 </html>
