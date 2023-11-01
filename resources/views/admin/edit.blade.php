@@ -6,9 +6,17 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Edit a News article</h1>
+@extends('admin.layout')
+@section('content')
+    
 
-    @if ($errors->any())
+    
+    
+    <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+        <h1>Edit a News article</h1>
+        @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
                 @foreach ($errors->all() as $error)
@@ -17,20 +25,38 @@
             </ul>
         </div>
     @endif
-    
-    <form method="post" action="{{route('admin.news.update', ['news' => $news])}}">
-        @csrf 
-        @method('put')
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" value="{{$news->title}}" required><br><br>
+            <form method="post" action="{{route('admin.news.update', ['news' => $news])}}">
+                @csrf 
+                @method('put')
+                
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" value="{{$news->title}}" class="form-control">
+                </div>
 
-        <label for="category">Category:</label>
-        <input type="text" id="category" name="category" value="{{$news->category}}" required><br><br>
+                <div class="form-group">
+                    <label for="category">Category:</label>
+                    <select id="category" name="category" class="form-control">
+                        <option value="" disabled selected>Select a category</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-        <label for="content">Content:</label>
-        <textarea id="content" name="content" rows="6" required>{{$news->content}}</textarea><br><br>
+                <div class="form-group">
+                    <label for="content">Content:</label>
+                    <textarea id="content" name="content" rows="6" class="form-control">{{$news->content}}</textarea>
+                </div>
 
-        <input type="submit" value="Edit News">
-    </form>
+                <button type="submit" class="btn btn-primary">Edit News</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+    @endsection
+
 </body>
 </html>

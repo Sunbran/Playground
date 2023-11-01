@@ -6,7 +6,16 @@
     <title>Document</title>
 </head>
 <body>
+@extends('admin.layout')
+@section('content')
     <h1>News</h1>
+
+    @if(Session::has('userHasAccessToTheContent'))
+                <form method="POST" action="{{ route('admin.logout.submit') }}">
+                   @csrf
+                   <button type="submit" class="btn btn-warning">Logout</button>
+                 </form>
+                @endif
     <div>
         @if(session()->has('success'))
           <div>
@@ -14,32 +23,33 @@
           </div>
         @endif
     </div>
-    <a href="{{route('admin.news.create')}}">Create News</a>
-    <table class="table table-striped">
-      <tr>
-        <th>Title</th>
-        <th>Category</th>
-        <th>Content</th>
-        <th>Edit</th>
-        <th>Delete</th>
-      </tr>
-      @foreach($news as $newss)
-        <tr>
-            <td>{{$newss->title}}</td>
-            <td>{{$newss->category->name}}</td>
-            <td>{{$newss->content}}</td>
-            <td>
-                <a href="{{route('admin.news.edit', ['news' => $newss])}}">Edit</a>
-            </td>
-            <td>
+    <ul class="list-group">
+    @foreach($news as $newss)
+    <li class="list-group-item">
+        <h4>{{$newss->title}}</h4>
+        <p>Category: {{$newss->category->name}}</p>
+        <p>{{$newss->content}}</p>
+        <div class="btn-group" role="group" aria-label="Actions">
+            <form method="get" action="{{route('admin.news.edit', ['news' => $newss])}}">
+                @csrf
+                @method('get')
+                <button type="submit" class="btn btn-info">Edit</button>
+            </form>
             <form method="post" action="{{route('admin.news.delete', ['news' => $newss])}}">
+                @csrf
+                @method('delete')
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+    </li>
+    @endforeach
+</ul>
+                <form method="get" action="{{route('admin.news.create', ['news' => $newss])}}">
                     @csrf
-                    @method('delete')
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    @method('get')
+                    <button type="submit" class="btn btn-success"">Create News</button>
                 </form>
-            </td>
-        </tr>
-      @endforeach
-    </table>
+
+@endsection
 </body>
 </html>

@@ -34,4 +34,11 @@ class LoginController extends Controller
 
         return redirect()->route('admin.login');
     }
+
+    public function logout()
+    {
+        Session::forget('userHasAccessToTheContent');
+
+        return redirect()->route('admin.login');
+    }
 }

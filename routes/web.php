@@ -31,4 +31,6 @@ Route::middleware(['OpenAdminPanelWhenPasswordIsCorrect'])->group(function () {
     Route::get('/admin/news/{news}/edit', [NewsController::class, 'edit'])->name('admin.news.edit');
     Route::put('/admin/news/{news}/update', [NewsController::class, 'update'])->name('admin.news.update');
     Route::delete('/admin/news/{news}/delete', [NewsController::class, 'delete'])->name('admin.news.delete');
+    Route::get('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
+    Route::post('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout.submit');
 });

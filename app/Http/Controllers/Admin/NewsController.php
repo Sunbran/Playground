@@ -29,31 +29,26 @@ class NewsController extends Controller
             'category' => 'required|exists:categories,id',
             'content' => 'required|string',
         ]);
-
-        // Find the selected category
         $category = Category::find($data['category']);
-
-        // Check if the category exists
         if ($category) {
-            // Create a new News instance
             $newArticle = new News([
                 'title' => $data['title'],
                 'content' => $data['content'],
             ]);
-
-            // Associate the news article with the category
             $category->news()->save($newArticle);
 
             return redirect(route('admin.news.index'));
         } else {
-            // Handle the case where the category doesn't exist
             return redirect(route('admin.news.create'))->with('error', 'Selected category does not exist.');
         }
     }
 
     public function edit(News $news)
     {
-        return view('admin.edit', ['news' => $news]);
+        $categories = Category::all(); // Fetch the categories from your database
+
+        return view('admin.edit', ['news' => $news, 'categories' => $categories]);
+
     }
 
     public function update(News $news, Request $request)
@@ -61,7 +56,7 @@ class NewsController extends Controller
         $data = $request->validate(
             [
                 'title' => 'required|string',
-                'category' => 'nullable|exists:categories,id',
+                'category' => 'required|exists:categories,id',
                 'content' => 'required|string',
             ]
         );
