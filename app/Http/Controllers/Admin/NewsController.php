@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
+    /**
+     * Display a listing of news.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         $news = News::all();
@@ -15,6 +20,11 @@ class NewsController extends Controller
         return view('admin.index', ['news' => $news]);
     }
 
+    /**
+     * Show the form for creating a new news article.
+     *
+     * @return \Illuminate\View\View
+     */
     public function create()
     {
         $categories = Category::all();
@@ -22,6 +32,11 @@ class NewsController extends Controller
         return view('admin.create', ['categories' => $categories]);
     }
 
+    /**
+     * Store a newly created news article in storage.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -43,6 +58,11 @@ class NewsController extends Controller
         }
     }
 
+    /**
+     * Show the form for editing the specified news article.
+     *
+     * @return \Illuminate\View\View
+     */
     public function edit(News $news)
     {
         $categories = Category::all(); // Fetch the categories from your database
@@ -51,6 +71,11 @@ class NewsController extends Controller
 
     }
 
+    /**
+     * Update the specified news article in storage.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(News $news, Request $request)
     {
         $data = $request->validate(
@@ -66,6 +91,11 @@ class NewsController extends Controller
         return redirect(route('admin.news.index'))->with('success', 'News Updated Successfully');
     }
 
+    /**
+     * Remove the specified news article from storage.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function delete(News $news)
     {
         $news->delete();

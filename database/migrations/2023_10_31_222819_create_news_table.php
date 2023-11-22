@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id');
             $table->string('title');
-            $table->string('content');
-            $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->string('content', 2500);
+            $table->foreignId('category_id')->nullable()->constrained();
             $table->timestamps();
         });
     }

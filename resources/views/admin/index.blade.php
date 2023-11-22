@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
 @extends('admin.layout')
 @section('content')
     <h1>News</h1>
@@ -27,7 +19,7 @@
     @foreach($news as $newss)
     <li class="list-group-item">
         <h4>{{$newss->title}}</h4>
-        <p>Category: {{$newss->category->name}}</p>
+        <p>Category: {{ optional($newss->category)->name }}</p>
         <p>{{$newss->content}}</p>
         <div class="btn-group" role="group" aria-label="Actions">
             <form method="get" action="{{route('admin.news.edit', ['news' => $newss])}}">
@@ -44,12 +36,10 @@
     </li>
     @endforeach
 </ul>
-                <form method="get" action="{{route('admin.news.create', ['news' => $newss])}}">
+                <form method="get" action="{{route('admin.news.create')}}">
                     @csrf
                     @method('get')
                     <button type="submit" class="btn btn-success"">Create News</button>
                 </form>
 
 @endsection
-</body>
-</html>

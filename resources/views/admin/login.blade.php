@@ -1,9 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Password Form</title>
-</head>
-<body>
 @extends('admin.layout')
 @section('content')
     <form method="POST" action="{{ route('admin.login.submit') }}">
@@ -39,5 +33,4 @@
     
    
     @endsection
-</body>
-</html>
+
