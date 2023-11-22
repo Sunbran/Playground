@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\NewsController;
 use Illuminate\Support\Facades\Route;
@@ -14,10 +15,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::middleware(['OpenAdminLoginWhenPasswordIsNotCorrect'])->group(function () {
     Route::get('/admin', [LoginController::class, 'login'])->name('admin.login');
@@ -34,3 +31,9 @@ Route::middleware(['OpenAdminPanelWhenPasswordIsCorrect'])->group(function () {
     Route::get('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
     Route::post('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout.submit');
 });
+
+Route::get('/', [HomeController::class, 'index'])->name('user.home');
+Route::get('/news/{news}', [HomeController::class, 'show'])->name('user.news.show');
+Route::get('/news/category/{category?}', [HomeController::class, 'newsByCategory'])->name('user.news.byCategory');
+Route::get('/search', [HomeController::class, 'search'])->name('user.news.search');
+Route::post('/news/{news}/feedback', [HomeController::class, 'feedback'])->name('user.news.feedback');

@@ -19,4 +19,9 @@ class News extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function feedback()
+    {
+        return $this->hasMany(Feedback::class);
+    }
 }
