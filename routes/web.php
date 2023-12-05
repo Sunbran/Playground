@@ -34,6 +34,5 @@ Route::middleware(['OpenAdminPanelWhenPasswordIsCorrect'])->group(function () {
 
 Route::get('/', [HomeController::class, 'index'])->name('user.home');
 Route::get('/news/{news}', [HomeController::class, 'show'])->name('user.news.show');
-Route::get('/news/category/{category?}', [HomeController::class, 'newsByCategory'])->name('user.news.byCategory');
-Route::get('/search', [HomeController::class, 'search'])->name('user.news.search');
+Route::get('/news/{filter?}', [HomeController::class, 'filterNews'])->name('user.news.filter');
 Route::post('/news/{news}/feedback', [HomeController::class, 'feedback'])->name('user.news.feedback');

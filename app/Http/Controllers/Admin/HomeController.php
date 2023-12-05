@@ -21,28 +21,27 @@ class HomeController extends Controller
         return view('user.show', ['news' => $news]);
     }
 
-    public function newsByCategory(Request $request, $category = null)
+    public function filterNews(Request $request, $filter = null)
     {
         $categories = Category::all();
+        $searchQuery = $request->input('search');
+        $categoryFilter = $request->input('category');
 
-        if ($category) {
-            $category = Category::where('name', $category)->firstOrFail();
-            $news = $category->news;
-        } else {
-            $news = News::all();
+        $news = News::query();
+
+        if ($categoryFilter) {
+            $category = Category::where('name', $categoryFilter)->firstOrFail();
+            $news->where('category_id', $category->id);
         }
 
-        return view('user.index', ['news' => $news, 'categories' => $categories]);
-    }
+        if ($searchQuery) {
+            $news->where(function ($query) use ($searchQuery) {
+                $query->where('title', 'like', '%'.$searchQuery.'%')
+                    ->orWhere('content', 'like', '%'.$searchQuery.'%');
+            });
+        }
 
-    public function search(Request $request)
-    {
-        $searchQuery = $request->input('search');
-        $news = News::where('title', 'like', '%'.$searchQuery.'%')
-            ->orWhere('content', 'like', '%'.$searchQuery.'%')
-            ->get();
-
-        $categories = Category::all();
+        $news = $news->get();
 
         return view('user.index', ['news' => $news, 'categories' => $categories]);
     }
