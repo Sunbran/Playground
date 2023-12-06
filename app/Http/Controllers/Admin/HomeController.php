@@ -26,25 +26,27 @@ class HomeController extends Controller
         $categories = Category::all();
         $searchQuery = $request->input('search');
         $categoryFilter = $request->input('category');
-
-        $news = News::query();
-
+    
+        $news = News::with('category'); 
+    
         if ($categoryFilter) {
-            $category = Category::where('name', $categoryFilter)->firstOrFail();
-            $news->where('category_id', $category->id);
+            $news->whereHas('category', function ($query) use ($categoryFilter) {
+                $query->where('name', $categoryFilter);
+            });
         }
-
+    
         if ($searchQuery) {
             $news->where(function ($query) use ($searchQuery) {
                 $query->where('title', 'like', '%'.$searchQuery.'%')
                     ->orWhere('content', 'like', '%'.$searchQuery.'%');
             });
         }
-
+    
         $news = $news->get();
-
+    
         return view('user.index', ['news' => $news, 'categories' => $categories]);
     }
+    
 
     public function feedback(News $news, Request $request)
     {

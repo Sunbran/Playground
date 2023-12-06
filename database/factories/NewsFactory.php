@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,6 +17,7 @@ class NewsFactory extends Factory
      */
     public function definition(): array
     {
+        $category = Category::factory()->create();
         return [
             'title' => $this->faker->name(),
             'content' => $this->faker->paragraphs(rand(3, 6), true),
